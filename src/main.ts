@@ -6,10 +6,8 @@ import mongoose from 'mongoose';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  // Global pipes
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
-  // Mongo connection logs
   mongoose.connection.on('connected', () => {
     console.log('✅ Connected to MongoDB');
   });

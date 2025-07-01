@@ -1,0 +1,23 @@
+# Use an official Node.js runtime as the base image
+FROM node:18-alpine
+
+# Set working directory inside the container
+WORKDIR /usr/src/app
+
+# Copy package.json and package-lock.json first (for caching layers)
+COPY package*.json ./
+
+# Install app dependencies
+RUN npm install --production
+
+# Copy the rest of your app’s source code
+COPY . .
+
+# Build the NestJS app
+RUN npm run build
+
+# Expose the port your app runs on
+EXPOSE 3000
+
+# Command to run the app
+CMD ["node", "dist/main"]
